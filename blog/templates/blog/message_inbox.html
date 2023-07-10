@@ -1,0 +1,132 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<main class="content">
+    <div class="container p-0 ">
+
+		<h1 class="h3 mb-3">Messages</h1>
+		<div id="get-messages" style="font-size: 40px;">
+		</div>
+		<div class="row">
+			<div class="col-lg-2.5 mb-4" style="padding:-5px 0px;">
+				<div class="card">
+					<div class="card-body" style="height: 550px;width: 200px;">
+						<div style="min-height: 550px;" >
+							<div class="">
+
+								<div class="px-4 d-none d-md-block" style="overflow: fixed;">
+									<div class="d-flex align-items-center" style="width:130px;">
+										<div class="flex-grow-1">
+											<input type="text" class="form-control my-3" placeholder="Search...">
+										</div>
+									</div>
+								</div>
+								{% for user in users %}
+								{% if request.user != user %}
+			  					<a href="{% url 'message-user' user.id %}" class="list-group-item list-group-item-action border-0">
+									<div class="badge bg-success float-right"></div>
+									<div class="d-flex align-items-start">
+										<img src="{{ user.profile.image.url }}" class="rounded-circle mr-1" alt="#" width="40" height="40">
+										<div class="flex-grow-1 ml-3">
+											{{ user.username }}
+											<div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+										</div>
+									</div>
+								</a>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="message-main-container" class="col-lg-7.5 mb-4">
+				<div class="card" style="padding: -30px;height: 550px;width: 550px;">
+					<div class="card-body" style="overflow-y: scroll;padding: -0px;">
+					<div style="min-height: 550px;" >
+
+					<hr class="d-block d-lg-none mt-1 mb-0">
+					<div class="" id="messages-container">
+						{% if to_user != None %}
+							
+								<div class="position-absolute" style="display: inline-flex;background-color: white;width: 549px; z-index: 2; padding: 5px;border-bottom: 1px solid #d2d2d2;">
+									<div class="position-relative">
+										<img src="{{ to_user.profile.image.url }}" class="rounded-circle mr-1" alt="{{ to_user.username }}" width="40" height="40">
+									</div>
+									<div class="" >
+										<strong></strong>
+										<div class="flex-grow-1 ">{{ to_user.username }}</div>
+										<div class="text-muted small"><em>Typing...</em></div>
+									</div>
+								</div>
+
+							{% for message in dm_messages %}
+								<div id="message-{{ message.id }}" class="position-relative">
+									<div class="chat-messages" id="chat-messages">
+										{% if message.msg_from_user == request.user %}
+										<div class="chat-message-right pb-4" id="right-message">
+											<div>
+												<img src="{{ message.msg_from_user.profile.image.url }}" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+												<div class="text-muted small text-nowrap mt-2">{{message.created}}</div>
+											</div>
+											<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+												<div class="font-weight-bold mb-1">You</div>
+												<div id="right-messages-text">{{message.text}}</div>
+											</div>
+											
+										</div>
+										{% else %}
+
+										<div class="chat-message-left pb-4">
+											<div>
+												<img src="{{ message.msg_from_user.profile.image.url }}" class="rounded-circle mr-1" alt="{{ message.msg_from_user.username }}" width="40" height="40">
+												<div class="text-muted small text-nowrap mt-2">{{message.created}}</div>
+											</div>
+											<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+												<div class="font-weight-bold mb-1">{{ message.msg_from_user.username }}</div>
+												<div id="left-messages-text">
+													{{ message.text }}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+									</div>
+								</div>
+							{% endfor %}
+						{% else %}
+							<div class="chat-message-left pb-4">
+								<h2 style="padding: 17px;">This is message Box</h2>
+							</div>
+						{% endif %}
+						<div class="card-body ">
+							<div style="position: absolute; bottom: 0;">
+								{% if to_user != None %}
+									<div class="" style="display: inline-flex;">
+										<form class="row g-3" id="my-form" method="POST" class="post-form" action="">
+										{% csrf_token %}
+											<fieldset style="width: 400px;">
+											{{ form|crispy }}
+											</fieldset>
+							    		</form>
+							    		<button style="width: 80px;height: 40px;" class="form-control" value ="" onclick="sendMessage({{to_user.id}})">Send</button>
+						    		</div>
+						    	{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+{% endblock content %}
+{% block javascript %}
+{% if to_user %}
+<script>document.to_user_id = {{ to_user.id }}</script>
+<script type="text/javascript" src="{% static 'blog/message.js' %}"></script>
+{% endif %}
+{% endblock javascript %}
+

@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	{% if results.exists %}
+		<div style="padding-top: 100px;">
+			{% for result in results %}
+			<a class="btn btn-outline-secondary" href="{% url 'user-info' result.username %}">
+				<div class="d-flex align-items-start">
+					<img src="{{ result.profile.image.url }}" class="rounded-circle mr-1" alt="#" width="40" height="40">
+					<div class="flex-grow-1 ml-3">
+						{{ result.username }}
+						<div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+					</div>
+				</div>
+			</a>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+{% for post in posts %}
+<h1>post.username</h1>
+{% endfor %}
+
+{% endblock content %}

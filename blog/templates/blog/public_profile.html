@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}    
+    <div class="card">
+        <div class="d-flex align-items-center">
+            <div style="padding-left:10px;">
+                <img src="{{ user.profile.image.url }}" style="border-style:none;border-radius:50%;height:150px;"class="img-circle" width="150" >
+            </div>
+            <div class="ml-3 w-100">
+                <h4 class="pt-4 pl-4">{{ user.username }}</h4>
+                <span class="ml-4">Blogger</span>
+                <div class="p-2 d-flex align-items-md-start">
+                    <div class="d-flex flex-sm-column">
+    				    <span class="articles p-2">Posts</span>
+    				    <span class="number1 p-2">{{ page_obj.paginator.count }}</span>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span class="followers p-2">Followers</span>
+                        <span class="number2 p-2">{{ followers }}</span>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span class="rating p-2">Following</span>
+                        <span class="number3 p-2">{{ i_follow }}</span>
+                    </div>
+                </div>
+                {% if request.user != user %}
+                <div class="button mt-2 d-flex flex-row align-items-center">  
+                    {% if following %}
+                        <a class="btn btn-sm btn-secondary w-25 ml-2 mb-4" href="{% url 'follow-user' user.id %}">UnFollow</a>
+                    {% else %}
+                        <a class="btn btn-sm btn-outline-secondary w-25 ml-2 mb-4" href="{% url 'follow-user' user.id %}">Follow</a>
+                    {% endif %}
+                    <a class="btn btn-sm btn-outline-secondary w-25 ml-2 mb-4" href="{% url 'message-user' user.id %}">Message</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
