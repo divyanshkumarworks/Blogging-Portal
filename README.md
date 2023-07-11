@@ -16,7 +16,7 @@ https://github.com/divyanshkumarworks/Blogging-Portal.git
 ```
 2. Create Virtual Environment
 ```bash
-python3 -m venv venv
+python -m venv venv
 ```
 3. Activate the environment
 ```bash
@@ -26,6 +26,23 @@ source /venv/bin/activate
 4. Install Dependencies
 ```bash
 pip3 install -r requirements.txt
+```
+5. Make migrations using
+```bash
+python manage.py makemigrations
+```
+
+5. Migrate Database
+```bash
+python manage.py migrate
+```
+6. Create a superuser
+```bash
+python manage.py createsuperuser
+```
+7. Run server using
+```bash
+python manage.py runserver
 ```
 
 ## Environment Variables
