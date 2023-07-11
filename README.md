@@ -38,5 +38,5 @@ To run this project, you will need to add the following environment variables to
 
 - I built this to start learning Django
 - This project is an extension of the project built by [Corey Schafer](https://www.coreyms.com)
-- link for the full djnago blog-app tutorial [Django Tutorial: Corey Schafer on YouTube](https://youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH)
+- link for the full django blog-app tutorial [Django Tutorial: Corey Schafer on YouTube](https://youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH)
 - explained very well hope you're going to enjoy it.
