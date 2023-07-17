@@ -45,12 +45,6 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`OPENAI_API_KEY`
-
 ### Credits
 
 - I built this to start learning Django
